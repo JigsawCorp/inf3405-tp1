@@ -6,9 +6,9 @@ public class ConnectionValidator {
     private static final int maxIpByteVal = 255;
     private static final int minIpByteVal = 0;
 
-    public boolean validateIp(String IP)
+    public static boolean validateIp(String IP)
     {
-        String[] ipBytes = IP.split(".");
+        String[] ipBytes = IP.split("\\.");
 
         // Return false if less than 4 bytes
         if (ipBytes.length != 4) {
@@ -32,7 +32,7 @@ public class ConnectionValidator {
         return true;
     }
 
-    public boolean validatePort(int port)
+    public static boolean validatePort(int port)
     {
         return port >= minPort && port <= maxPort;
     }
