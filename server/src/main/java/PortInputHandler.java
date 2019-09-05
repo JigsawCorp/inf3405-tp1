@@ -1,19 +1,23 @@
 import connection.ConnectionValidator;
 
+import java.util.Scanner;
+
 public class PortInputHandler {
-    public static int askForInput()
+    public static int promptPort()
     {
         System.out.println("Please enter the listening port (between 5000 and 5050)");
         do {
             try {
-                String input = System.console().readLine();
+                Scanner scanner = new Scanner(System.in);
+                String input = scanner.nextLine();
+
                 int port = Integer.parseInt(input);
 
                 if (ConnectionValidator.validatePort(port))
                     return port;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid entry. Please try again:");
-            }
+            } catch (NumberFormatException ignored) {}
+
+            System.out.println("Invalid entry. Please try again:");
         } while (true);
     }
 }

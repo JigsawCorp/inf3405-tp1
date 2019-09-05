@@ -16,7 +16,18 @@ import java.util.Stack;
 //plusieurs clients en même temps au serveur ne fonctionnera pas! A vous de threader le serveur
 //pour qu'il puisse avoir la capacité d'accepter plusieurs clients.
 public class Server {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException
+    {
+        try {
+            int port = PortInputHandler.promptPort();
+            run(port);
+        } catch (Exception e) {
+            System.out.println("Error encountered. Closing server...");
+        }
+    }
+
+    private static void run(int port) throws IOException
+    {
         while (true) {
             ServerSocket serverSocket = null;
             Socket socket = null;
@@ -48,6 +59,9 @@ public class Server {
                 out.writeObject(stackOfLines);
                 // Envoi des données vers le client.
                 out.flush();
+            } catch (Exception e) {
+//                System.out.println("Fatal error: " + e.getMessage());
+                break;
             } finally {
                 serverSocket.close();
                 socket.close();
