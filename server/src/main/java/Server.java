@@ -21,18 +21,19 @@ public class Server {
         try {
             int port = PortInputHandler.promptPort();
             run(port);
+        } catch (IOException e) {
+            System.out.println("Error encountered during data input/output.\n" +
+                    "Details: " + e + "\n" +
+                    "Closing server...");
         } catch (Exception e) {
-            System.out.println("Error encountered. Closing server...");
+            System.out.println("Internal error encountered. The server will now stop.");
         }
     }
 
-    private static void run(int port) throws IOException
-    {
+    private static void run(int port) throws IOException, ClassNotFoundException {
         while (true) {
             ServerSocket serverSocket = null;
             Socket socket = null;
-            ObjectInputStream in = null;
-            ObjectOutputStream out = null;
             try {
                 // Création du socket du serveur en utilisant le port 5000.
                 serverSocket = new ServerSocket(5000);
@@ -40,28 +41,9 @@ public class Server {
                 // Ici, la fonction accept est bloquante! Ainsi, l'exécution du serveur s'arrête
                 // ici et attend la connection d'un client avant de poursuivre.
                 socket = serverSocket.accept();
-                // Création d'un input stream. Ce stream contiendra les données envoyées par le
-                // client.
-                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-                // La fonction readObject est bloquante! Ainsi, le serveur arrête son exécution
-                // et attend la réception de l'objet envoyé par le client!
-                List<String> strings = (List<String>) in.readObject();
-                Stack<String> stackOfLines = new Stack<String>();
-                // Remplissage de la stack avec les lignes. La première ligne entrée sera la
-                // dernière à ressortir.
-                for (int i = 0; i < strings.size(); i++) {
-                    stackOfLines.push(strings.get(i));
-                }
-                // Création du output stream. Ce stream contiendra les données qui seront
-                // envoyées au client.
-                out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                // Écriture des données dans la pile.
-                out.writeObject(stackOfLines);
-                // Envoi des données vers le client.
-                out.flush();
-            } catch (Exception e) {
-//                System.out.println("Fatal error: " + e.getMessage());
-                break;
+                // TODO: Handle each connection separately so individual connection failures don't impact the whole server.
+                ClientConnection clientConnection = new ClientConnection(socket);
+                clientConnection.start();
             } finally {
                 serverSocket.close();
                 socket.close();
