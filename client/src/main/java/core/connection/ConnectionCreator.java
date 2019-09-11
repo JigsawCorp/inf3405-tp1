@@ -2,11 +2,13 @@ package core.connection;
 
 import connection.ConnectionValidator;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ConnectionCreator {
 
-    public static ConnectionHandler createConnectionHandler()
+    public static ConnectionHandler createConnectionHandler() throws UnknownHostException, IOException, ClassNotFoundException
     {
         String IPAdress = promptIPAddress();
         while (!ConnectionValidator.validateIp(IPAdress)) {
