@@ -3,25 +3,25 @@ package core.command;
 import java.util.Scanner;
 
 public class CommandLoopListener {
-    private static boolean loopAtive = false;
+    private static boolean loopActive = false;
     public static void startListening()
     {
-        loopAtive = true;
-        while (loopAtive) {
+        loopActive = true;
+        while (loopActive) {
             CommandLoopListener.listenToCommand();
         }
     }
 
     public static void stopListening()
     {
-        loopAtive = false;
+        loopActive = false;
     }
 
     private static void listenToCommand()
     {
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
-
+        CommandDispatcher.dispatchCommand(userInput);
         
     }
 }
