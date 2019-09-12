@@ -2,16 +2,14 @@ package communication;
 
 import java.io.Serializable;
 
-public class Message implements Serializable {
+public abstract class Message implements Serializable {
     public Type dType;
-    public Object fData;
 
-    enum Type { COMMAND }
+    public enum Type { COMMAND, FILE, INFO }
 
-    public Message(Type type, Object data)
+    protected Message(Type type)
     {
         dType = type;
-        fData = data;
     }
 
 }
