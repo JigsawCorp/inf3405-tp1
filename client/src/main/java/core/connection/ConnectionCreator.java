@@ -3,30 +3,41 @@ package core.connection;
 import connection.ConnectionValidator;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ConnectionCreator {
 
-    public static ConnectionHandler createConnectionHandler() throws UnknownHostException, IOException, ClassNotFoundException
+    public static ConnectionHandler createConnectionHandler()
     {
-        String IPAdress = promptIPAddress();
-        while (!ConnectionValidator.validateIp(IPAdress)) {
-            IPAdress = promptIPAddress();
+        boolean continuePrompting = true;
+
+        while (continuePrompting) {
+            String IPAddress = promptIPAddress();
+            while (!ConnectionValidator.validateIp(IPAddress)) {
+                IPAddress = promptIPAddress();
+            }
+
+            int port = promptPort();
+            while (!ConnectionValidator.validatePort(port)) {
+                port = promptPort();
+            }
+
+            try {
+                ConnectionHandler.getInstance().connectToServer(new ServerInformation(IPAddress, port));
+                continuePrompting = false;
+            } catch (IOException e) {
+                System.out.println("Erreur lors de la connexion au serveur! Erreur complète:");
+                System.out.println(e.toString());
+            }
         }
 
-        int port = promptPort();
-        while(!ConnectionValidator.validatePort(port)) {
-            port = promptPort();
-        }
-
-        return new ConnectionHandler(new ServerInformation(IPAdress, port));
+        return ConnectionHandler.getInstance();
 
     }
 
     private static String promptIPAddress()
     {
-        System.out.println("Please enter the server IP adress:");
+        System.out.println("Please enter the server IP address:");
         Scanner scanner = new Scanner(System.in);
 
         return scanner.nextLine();
@@ -51,5 +62,6 @@ public class ConnectionCreator {
         } while(continuePrompting);
 
         return port;
+
     }
 }
