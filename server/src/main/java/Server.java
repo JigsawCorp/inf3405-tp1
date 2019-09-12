@@ -36,7 +36,7 @@ public class Server {
             Socket socket = null;
             try {
                 // Création du socket du serveur en utilisant le port 5000.
-                serverSocket = new ServerSocket(5000);
+                serverSocket = new ServerSocket(port);
                 System.out.println("Server is running");
                 // Ici, la fonction accept est bloquante! Ainsi, l'exécution du serveur s'arrête
                 // ici et attend la connection d'un client avant de poursuivre.
