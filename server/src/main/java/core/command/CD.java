@@ -14,7 +14,7 @@ public class CD extends CommandHandler {
     @Override
     public void execute(String currentWorkingDirectory) throws IOException
     {
-        sendCommand(fCommand);
+        sendMessage(fCommand);
         handleResponse();
     }
 
