@@ -1,4 +1,12 @@
 package communication;
 
-public class File {
+import java.io.Serializable;
+
+public class File extends Message implements Serializable {
+
+
+    public File()
+    {
+        super(Type.FILE);
+    }
 }
