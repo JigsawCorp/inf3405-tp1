@@ -5,6 +5,7 @@ import communication.Message;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class CommunicationHandler {
@@ -32,8 +33,18 @@ public class CommunicationHandler {
         }
     }
 
-    public void sendMessage(Message message){
+    public void sendMessage(Message message) throws IOException {
+        ObjectOutputStream outStream = null;
 
+        try {
+            outStream = new ObjectOutputStream(fSocket.getOutputStream());
+            outStream.writeObject(message);
+        } catch (IOException e) {
+            System.out.println("Erreur lors de l'envoi d'une message au serveur! Erreur complète:");
+            System.out.println(e.toString());
+        } finally {
+            if (outStream != null) outStream.flush();
+        }
     }
 
     public void sendFile(String filePath)
