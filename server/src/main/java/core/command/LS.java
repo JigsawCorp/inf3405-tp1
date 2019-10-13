@@ -2,6 +2,7 @@ package core.command;
 
 import command.Command;
 import communication.Info;
+import core.ClientConnection;
 import core.CommunicationHandler;
 
 import java.io.File;
@@ -11,16 +12,16 @@ import java.nio.file.Paths;
 
 public class LS extends CommandHandler {
 
-    public LS(Command command, CommunicationHandler communicationHandler) {
-        super(command, communicationHandler);
+    public LS(Command command, ClientConnection clientConnection) {
+        super(command, clientConnection);
     }
 
     @Override
-    public void execute(String currentWorkingDirectory) throws IOException
+    public void execute(Path currentWorkingDirectory) throws IOException
     {
         String result = "";
-        Path base = Paths.get(currentWorkingDirectory);
-        File f = new File(currentWorkingDirectory);
+        Path base = currentWorkingDirectory;
+        File f = new File(currentWorkingDirectory.toString());
         File[] files = f.listFiles();
         for (int i = 0; i < files.length; ++i) {
             if (files[i].isDirectory()) {
