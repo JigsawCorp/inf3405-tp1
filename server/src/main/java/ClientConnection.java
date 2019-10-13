@@ -1,33 +1,38 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
-import java.util.Stack;
 
-public class ClientConnection {
+public class ClientConnection implements Runnable {
     private Socket fSocket = null;
+    private Thread fThread;
+    private CommunicationHandler fCommunicationHandler;
     public ClientConnection(Socket socket) {
         fSocket = socket;
+        fThread = new Thread(this);
+        fThread.start();
+        fCommunicationHandler = new CommunicationHandler();
     }
 
+    /*
     public void start() throws IOException, ClassNotFoundException {
         // Création d'un input stream. Ce stream contiendra les données envoyées par le
         // client.
+        System.out.println("Waiting for info!");
         ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(fSocket.getInputStream()));
+        System.out.println("Received info 1!");
+        System.out.println(in.readObject());
         // La fonction readObject est bloquante! Ainsi, le serveur arrête son exécution
         // et attend la réception de l'objet envoyé par le client!
-        List<String> strings = (List<String>) in.readObject();
-        Stack<String> stackOfLines = new Stack<String>();
-        // Remplissage de la stack avec les lignes. La première ligne entrée sera la
-        // dernière à ressortir.
-        for (int i = 0; i < strings.size(); i++) {
-            stackOfLines.push(strings.get(i));
+        //List<String> strings = (List<String>) in.readObject()
+        System.out.println("Received info3!");
+    }
+    */
+
+    @Override
+    public void run() {
+        try {
+            System.out.println("Starting thread!");
+        } catch (Exception e) {
+
         }
-        // Création du output stream. Ce stream contiendra les données qui seront
-        // envoyées au client.
-        ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(fSocket.getOutputStream()));
-        // Écriture des données dans la pile.
-        out.writeObject(stackOfLines);
-        // Envoi des données vers le client.
-        out.flush();
     }
 }
