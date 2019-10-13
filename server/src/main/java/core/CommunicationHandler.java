@@ -19,7 +19,6 @@ public class CommunicationHandler {
 
     public Message receiveMessage()
     {
-        System.out.println("Waiting for message");
         ObjectInputStream inStream = null;
         try {
             inStream = new ObjectInputStream(fSocket.getInputStream());
