@@ -1,12 +1,8 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import core.ClientConnectionManager;
+import core.PortInputHandler;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.List;
-import java.util.Stack;
 
 /** Le client doit etre capable de lire un fichier texte et d'envoyer son contenu au serveur qui retransmettra aussitot
  *  son contenu au client. Ce dernier devra intercepter le contenu du fichier texte. Une fois la reception terminee, le
@@ -46,7 +42,7 @@ public class Server {
                 while(true) {
                     socket = serverSocket.accept();
                     // TODO: Handle each connection separately so individual connection failures don't impact the whole server.
-                    ClientConnection clientConnection = new ClientConnection(socket);
+                    core.ClientConnection clientConnection = new core.ClientConnection(socket);
                     clientConnection.start();
                 }
             } finally {
