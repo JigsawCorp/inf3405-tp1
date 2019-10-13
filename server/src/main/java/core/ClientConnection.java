@@ -53,6 +53,7 @@ public class ClientConnection implements Runnable {
             fAcceptClientCommunication = true;
             while (fAcceptClientCommunication) {
                 Message message = fCommunicationHandler.receiveMessage();
+                CommandLogger.logCommand((Command) message, fSocket);
                 CommandHandler command = CommandHandler.instantiate(((Command) message), fCommunicationHandler);
                 try {
                     command.execute(fCurrentWorkingDirectory);
