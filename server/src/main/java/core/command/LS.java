@@ -1,13 +1,13 @@
 package core.command;
 
 import command.Command;
+import communication.Info;
 import core.CommunicationHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class LS extends CommandHandler {
 
@@ -18,19 +18,19 @@ public class LS extends CommandHandler {
     @Override
     public void execute(String currentWorkingDirectory) throws IOException
     {
+        String result = "";
         Path base = Paths.get(currentWorkingDirectory);
         File f = new File(currentWorkingDirectory);
         File[] files = f.listFiles();
         for (int i = 0; i < files.length; ++i) {
             if (files[i].isDirectory()) {
-                System.out.println("[Folder] " + base.relativize(files[i].toPath()).toString());
+                result += "[Folder] " + base.relativize(files[i].toPath()).toString() + System.lineSeparator();
             } else {
-                System.out.println("[File] " + base.relativize(files[i].toPath()).toString());
+                result += "[File] " + base.relativize(files[i].toPath()).toString() + System.lineSeparator();
             }
         }
         //System.out.println(base.relativize(Paths.get(Arrays.toString(f.listFiles())));
-        sendCommand(fCommand);
-        handleResponse();
+        sendMessage(new Info(result, Info.InfoType.RESPONSE, Info.Status.SUCCESS));
     }
 
 }
