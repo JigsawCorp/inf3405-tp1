@@ -29,9 +29,9 @@ public abstract class CommandHandler {
 
     public abstract void execute(String currentWorkingDirectory) throws Exception;
 
-    void sendCommand(Command command) throws IOException
+    void sendMessage(Message message) throws IOException
     {
-        fCommunicationHandler.sendMessage(command);
+        fCommunicationHandler.sendMessage(message);
     }
 
     void handleResponse() throws IOException
