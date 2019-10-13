@@ -19,8 +19,6 @@ public class ClientConnectionManager {
 
     public void addClient(Socket clientSocket)
     {
-        System.out.println("Adding client");
-
         try {
             ClientConnection newConnection = new ClientConnection(clientSocket);
             clients.add(newConnection);
