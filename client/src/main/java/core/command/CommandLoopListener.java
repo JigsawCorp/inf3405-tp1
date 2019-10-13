@@ -19,6 +19,7 @@ public class CommandLoopListener {
 
     private static void listenToCommand()
     {
+        System.out.println("Enter command");
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
         CommandDispatcher.dispatchCommand(userInput);
