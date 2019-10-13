@@ -1,15 +1,20 @@
-import java.io.*;
+package core;
+
+import communication.Message;
+
 import java.net.Socket;
 
 public class ClientConnection implements Runnable {
     private Socket fSocket = null;
     private Thread fThread;
     private CommunicationHandler fCommunicationHandler;
+    private boolean fAcceptClientCommunication;
+
     public ClientConnection(Socket socket) {
         fSocket = socket;
         fThread = new Thread(this);
+        fCommunicationHandler = new CommunicationHandler(socket);
         fThread.start();
-        fCommunicationHandler = new CommunicationHandler();
     }
 
     /*
@@ -31,8 +36,26 @@ public class ClientConnection implements Runnable {
     public void run() {
         try {
             System.out.println("Starting thread!");
+            enableIncomingCommunication();
         } catch (Exception e) {
 
         }
+    }
+
+    public void enableIncomingCommunication()
+    {
+        if (!fAcceptClientCommunication) {
+            fAcceptClientCommunication = true;
+            while (fAcceptClientCommunication) {
+                Message message = fCommunicationHandler.receiveMessage();
+                System.out.println("Received message!");
+                System.out.println(message);
+            }
+        }
+    }
+
+    public void disableIncomingCommnication()
+    {
+        fAcceptClientCommunication = false;
     }
 }

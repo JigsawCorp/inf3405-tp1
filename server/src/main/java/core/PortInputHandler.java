@@ -1,3 +1,5 @@
+package core;
+
 import connection.ConnectionValidator;
 
 import java.util.Scanner;
