@@ -17,4 +17,10 @@ public class Command extends Message implements Serializable {
         fArguments = arguments;
     }
 
+    @Override
+    public String toString() {
+        String res = "";
+        res += "Command name = " + fCommandName.toString() + ", arguments = " + fArguments.toString();
+        return res;
+    }
 }
