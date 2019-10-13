@@ -1,21 +1,31 @@
 package core.command;
 
 import command.Command;
+import communication.Info;
+import core.ClientConnection;
 import core.CommunicationHandler;
+import utils.FileUtils;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CD extends CommandHandler {
 
-    public CD(Command command, CommunicationHandler communicationHandler) {
-        super(command, communicationHandler);
+    public CD(Command command, ClientConnection clientConnection) {
+        super(command, clientConnection);
     }
 
     @Override
-    public void execute(String currentWorkingDirectory) throws IOException
+    public void execute(Path currentWorkingDirectory) throws IOException
     {
-        sendMessage(fCommand);
-        handleResponse();
+        if (!FileUtils.checkPathExists(fCommand.fArguments[0], currentWorkingDirectory)) {
+            sendMessage(new Info("Ce dossier n'existe pas.", Info.InfoType.RESPONSE, Info.Status.FAILURE));
+        } else {
+            Path path = FileUtils.getCombinedPath(fCommand.fArguments[0], currentWorkingDirectory);
+            fClientConnection.fCurrentWorkingDirectory = path;
+            sendMessage(new Info("Vous êtes dans le dossier " + path.getFileName(), Info.InfoType.RESPONSE, Info.Status.SUCCESS));
+        }
     }
 
 }
