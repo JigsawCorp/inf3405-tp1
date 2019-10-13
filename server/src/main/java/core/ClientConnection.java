@@ -6,19 +6,20 @@ import core.command.CommandHandler;
 
 import java.net.Socket;
 import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 public class ClientConnection implements Runnable {
     private Socket fSocket = null;
     private Thread fThread;
-    private CommunicationHandler fCommunicationHandler;
+    public CommunicationHandler fCommunicationHandler;
     private boolean fAcceptClientCommunication;
-    private String fCurrentWorkingDirectory;
+    public Path fCurrentWorkingDirectory;
 
     public ClientConnection(Socket socket) {
         fSocket = socket;
         fThread = new Thread(this);
         fCommunicationHandler = new CommunicationHandler(socket);
-        fCurrentWorkingDirectory = FileSystems.getDefault().getPath(".").toAbsolutePath().toString();
+        fCurrentWorkingDirectory = FileSystems.getDefault().getPath(".").toAbsolutePath();
         fThread.start();
     }
 
@@ -40,7 +41,6 @@ public class ClientConnection implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("Starting thread!");
             enableIncomingCommunication();
         } catch (Exception e) {
 
@@ -54,14 +54,12 @@ public class ClientConnection implements Runnable {
             while (fAcceptClientCommunication) {
                 Message message = fCommunicationHandler.receiveMessage();
                 CommandLogger.logCommand((Command) message, fSocket);
-                CommandHandler command = CommandHandler.instantiate(((Command) message), fCommunicationHandler);
+                CommandHandler command = CommandHandler.instantiate(((Command) message), this);
                 try {
                     command.execute(fCurrentWorkingDirectory);
                 } catch (Exception e) {
 
                 }
-                System.out.println("Received message!");
-                System.out.println(message);
             }
         }
     }
