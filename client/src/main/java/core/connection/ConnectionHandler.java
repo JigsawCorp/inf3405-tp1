@@ -61,8 +61,6 @@ public class ConnectionHandler {
             System.out.println("Erreur lors de la réception d'une réponse du serveur! Erreur complète:");
             System.out.println(e.toString());
             return null;
-        } finally {
-            //if (inStream != null) inStream.close();
         }
     }
 
@@ -95,11 +93,11 @@ public class ConnectionHandler {
 
     public void downloadFile(String filePath) throws IOException
     {
-        InputStream inStream = null;
+        DataInputStream inStream = null;
         FileOutputStream outStream = null;
 
         try {
-            inStream = fSocket.getInputStream();
+            inStream = new DataInputStream(new BufferedInputStream(fSocket.getInputStream()));
 
             File f = new File(filePath);
             if (f.exists()) {
@@ -108,18 +106,16 @@ public class ConnectionHandler {
 
             outStream = new FileOutputStream(filePath);
 
-            byte[] bytes = new byte[8192];
+            // Read file length
+            long fileLength = inStream.readLong();
 
-            int count;
-            while ((count = inStream.read(bytes)) > 0) {
-                outStream.write(bytes, 0, count);
-            }
-        } catch (IOException e) {
+            for(int i = 0; i < fileLength; ++i) outStream.write(inStream.read());
+
+        } catch (Exception e) {
             System.out.println("Erreur lors de la réception du fichier! Erreur complète:");
             System.out.println(e.toString());
         } finally {
             if (outStream != null) outStream.close();
-            //if (inStream != null) inStream.close();
         }
     }
 

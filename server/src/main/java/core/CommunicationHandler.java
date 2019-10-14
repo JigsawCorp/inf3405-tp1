@@ -25,8 +25,6 @@ public class CommunicationHandler {
             System.out.println("Erreur lors de la réception d'une réponse du serveur! Erreur complète:");
             System.out.println(e.toString());
             return null;
-        } finally {
-            //if (inStream != null) inStream.close();
         }
     }
 
@@ -44,9 +42,31 @@ public class CommunicationHandler {
         }
     }
 
-    public void sendFile(String filePath)
+    public void sendFile(String filePath) throws IOException
     {
+        InputStream inStream = null;
+        DataOutputStream outStream = null;
 
+        try {
+            File file = new File(filePath);
+            byte[] buffer = new byte[8192];
+            inStream = new FileInputStream(file);
+            outStream = new DataOutputStream(new BufferedOutputStream(fSocket.getOutputStream()));
+
+            // Send file length
+            outStream.writeLong(file.length());
+
+            int count;
+            while ((count = inStream.read(buffer)) > 0) {
+                outStream.write(buffer, 0, count);
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors de l'envoi du fichier! Erreur complète:");
+            System.out.println(e.toString());
+        } finally {
+            if (outStream != null) outStream.flush();
+            if (inStream != null) inStream.close();
+        }
     }
 
     public void receiveFile(String filePath) throws IOException
@@ -74,7 +94,6 @@ public class CommunicationHandler {
             System.out.println(e.toString());
         } finally {
             if (outStream != null) outStream.close();
-            //if (inStream != null) inStream.close();
         }
     }
 
