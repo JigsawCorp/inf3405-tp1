@@ -6,9 +6,9 @@ public class Info extends Message implements Serializable {
     public enum Status { SUCCESS, FAILURE }
     public enum InfoType { RESPONSE, ACK }
 
-    private String fMessage;
-    private Status fStatus;
-    private InfoType fInfoType;
+    public String fMessage;
+    public Status fStatus;
+    public InfoType fInfoType;
 
 
     public Info(String message, InfoType infoType, Status status)
