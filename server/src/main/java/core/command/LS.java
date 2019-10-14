@@ -30,8 +30,6 @@ public class LS extends CommandHandler {
                 result += "[File] " + base.relativize(files[i].toPath()).toString() + System.lineSeparator();
             }
         }
-        //System.out.println(base.relativize(Paths.get(Arrays.toString(f.listFiles())));
         sendMessage(new Info(result, Info.InfoType.RESPONSE, Info.Status.SUCCESS));
     }
-
 }
