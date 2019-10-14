@@ -29,6 +29,8 @@ public abstract class CommandHandler {
                 return new MKDIR(command, clientConnection);
             case UPLOAD:
                 return new Upload(command, clientConnection);
+            case DOWNLOAD:
+                return new Download(command, clientConnection);
             default:
                 return null;
         }
