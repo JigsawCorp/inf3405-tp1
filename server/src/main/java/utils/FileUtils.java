@@ -16,4 +16,11 @@ public class FileUtils {
     {
         return currentWorkingDirectory.resolve(newPath).normalize();
     }
+
+    public static boolean fileExists(String newPath, Path currentWorkingDirectory)
+    {
+        Path path = getCombinedPath(newPath, currentWorkingDirectory);
+
+        return Files.isRegularFile(path);
+    }
 }
