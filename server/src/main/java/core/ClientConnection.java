@@ -23,21 +23,6 @@ public class ClientConnection implements Runnable {
         fThread.start();
     }
 
-    /*
-    public void start() throws IOException, ClassNotFoundException {
-        // Création d'un input stream. Ce stream contiendra les données envoyées par le
-        // client.
-        System.out.println("Waiting for info!");
-        ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(fSocket.getInputStream()));
-        System.out.println("Received info 1!");
-        System.out.println(in.readObject());
-        // La fonction readObject est bloquante! Ainsi, le serveur arrête son exécution
-        // et attend la réception de l'objet envoyé par le client!
-        //List<String> strings = (List<String>) in.readObject()
-        System.out.println("Received info3!");
-    }
-    */
-
     @Override
     public void run() {
         try {
