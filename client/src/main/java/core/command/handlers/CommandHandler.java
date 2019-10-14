@@ -21,6 +21,11 @@ public abstract class CommandHandler {
         fConnectionHandler.sendMessage(command);
     }
 
+    Message waitForMessage() throws IOException
+    {
+        return fConnectionHandler.waitForMessage();
+    }
+
     void handleResponse() throws IOException
     {
         Message response = fConnectionHandler.waitForMessage();
