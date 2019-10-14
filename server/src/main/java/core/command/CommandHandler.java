@@ -31,6 +31,8 @@ public abstract class CommandHandler {
                 return new Upload(command, clientConnection);
             case DOWNLOAD:
                 return new Download(command, clientConnection);
+            case EXIT:
+                return new Exit(command, clientConnection);
             default:
                 return null;
         }
