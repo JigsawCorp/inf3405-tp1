@@ -2,11 +2,9 @@ package core;
 
 import communication.Message;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.FileAlreadyExistsException;
 
 public class CommunicationHandler {
     private boolean fAcceptClientCommunication;
@@ -51,9 +49,34 @@ public class CommunicationHandler {
 
     }
 
-    public void receiveFile(String fileName)
+    public void receiveFile(String filePath) throws IOException
     {
+        InputStream inStream = null;
+        FileOutputStream outStream = null;
 
+        try {
+            inStream = fSocket.getInputStream();
+
+            File f = new File(filePath);
+            if (f.exists()) {
+                throw new FileAlreadyExistsException(filePath + " already exists!");
+            }
+
+            outStream = new FileOutputStream(filePath);
+
+            byte[] bytes = new byte[8192];
+
+            int count;
+            while ((count = inStream.read(bytes)) > 0) {
+                outStream.write(bytes, 0, count);
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la réception du fichier! Erreur complète:");
+            System.out.println(e.toString());
+        } finally {
+            if (outStream != null) outStream.close();
+            //if (inStream != null) inStream.close();
+        }
     }
 
 
