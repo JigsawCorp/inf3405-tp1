@@ -69,13 +69,16 @@ public class ConnectionHandler {
     public void sendFile(String fileName) throws IOException
     {
         InputStream inStream = null;
-        OutputStream outStream = null;
+        DataOutputStream outStream = null;
 
         try {
             File file = new File(fileName);
             byte[] buffer = new byte[8192];
             inStream = new FileInputStream(file);
-            outStream = fSocket.getOutputStream();
+            outStream = new DataOutputStream(new BufferedOutputStream(fSocket.getOutputStream()));
+
+            // Send file length
+            outStream.writeLong(file.length());
 
             int count;
             while ((count = inStream.read(buffer)) > 0) {
@@ -86,7 +89,7 @@ public class ConnectionHandler {
             System.out.println(e.toString());
         } finally {
             if (outStream != null) outStream.flush();
-            //if (inStream != null) inStream.close();
+            if (inStream != null) inStream.close();
         }
     }
 
