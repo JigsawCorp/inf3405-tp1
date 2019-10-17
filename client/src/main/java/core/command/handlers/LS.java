@@ -7,10 +7,15 @@ import java.io.IOException;
 
 public class LS extends CommandHandler {
 
-    @Override
-    public void execute(Command command) throws IOException
+    public LS(Command command)
     {
-        sendCommand(command);
+        super(command);
+    }
+
+    @Override
+    public void execute() throws Exception
+    {
+        sendCommand(fCommand);
         handleResponse();
     }
 
