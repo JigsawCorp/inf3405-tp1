@@ -6,7 +6,7 @@ import core.connection.ConnectionHandler;
 
 import java.io.IOException;
 
-public class Application {
+public class Client {
     public static void main(String[] args) throws IOException
     {
         // Connect to server
