@@ -7,10 +7,14 @@ import java.io.IOException;
 
 public class MKDIR extends CommandHandler {
 
+    public MKDIR(Command command) {
+        super(command);
+    }
+
     @Override
-    public void execute(Command command) throws IOException
+    public void execute() throws Exception
     {
-        sendCommand(command);
+        sendCommand(fCommand);
         handleResponse();
     }
 }
