@@ -7,11 +7,9 @@ import java.net.Socket;
 import java.nio.file.FileAlreadyExistsException;
 
 public class CommunicationHandler {
-    private boolean fAcceptClientCommunication;
     private Socket fSocket;
     public CommunicationHandler(Socket socket)
     {
-        fAcceptClientCommunication = false;
         fSocket = socket;
     }
 

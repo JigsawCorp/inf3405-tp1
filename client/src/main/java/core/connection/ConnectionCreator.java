@@ -47,10 +47,6 @@ public class ConnectionCreator {
         return ConnectionHandler.getInstance();
     }
 
-    /**
-     * Prompts the user for the server IP
-     * @return The server IP address
-     */
     private static String promptIPAddress()
     {
         System.out.println("Veuillez entrer l'adresse IP du serveur:");
@@ -59,10 +55,6 @@ public class ConnectionCreator {
         return scanner.nextLine();
     }
 
-    /**
-     *
-     * @return
-     */
     private static int promptPort()
     {
         int port = 0;

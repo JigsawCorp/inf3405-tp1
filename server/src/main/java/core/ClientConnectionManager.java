@@ -23,7 +23,7 @@ public class ClientConnectionManager {
             ClientConnection newConnection = new ClientConnection(clientSocket);
             clients.add(newConnection);
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public class ClientConnectionManager {
                 try {
                 addClient(fServerSocket.accept());
                 } catch (IOException e) {
-
+                    System.out.println(e.getMessage());
                 }
             }
         }

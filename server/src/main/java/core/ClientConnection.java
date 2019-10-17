@@ -44,7 +44,7 @@ public class ClientConnection implements Runnable {
                     try {
                         command.execute(fCurrentWorkingDirectory);
                     } catch (Exception e) {
-
+                        System.out.println(e.getMessage());
                     }
                 }
             }
