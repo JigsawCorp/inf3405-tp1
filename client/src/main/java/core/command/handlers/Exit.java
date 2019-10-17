@@ -7,10 +7,14 @@ import java.io.IOException;
 
 public class Exit extends CommandHandler{
 
+    public Exit(Command command) {
+        super(command);
+    }
+
     @Override
-    public void execute(Command command) throws IOException
+    public void execute() throws IOException
     {
-        sendCommand(command);
+        sendCommand(fCommand);
         CommandLoopListener.stopListening();
         System.out.println("Vous avez été déconnecté avec succès");
     }

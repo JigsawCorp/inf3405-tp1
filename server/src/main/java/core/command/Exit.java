@@ -1,11 +1,8 @@
 package core.command;
 
 import command.Command;
-import communication.Info;
 import core.ClientConnection;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class Exit extends CommandHandler {
@@ -15,8 +12,8 @@ public class Exit extends CommandHandler {
     }
 
     @Override
-    public void execute(Path currentWorkingDirectory) throws IOException
+    public void execute(Path currentWorkingDirectory)
     {
-        fClientConnection.disableIncomingCommnication();
+        fClientConnection.disableIncomingCommunication();
     }
 }
