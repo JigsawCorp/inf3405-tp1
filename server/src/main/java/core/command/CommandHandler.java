@@ -38,20 +38,11 @@ public abstract class CommandHandler {
         }
     }
 
-    public abstract void execute(Path currentWorkingDirectory) throws Exception;
+    public abstract void execute(Path currentWorkingDirectory) throws IOException;
 
     void sendMessage(Message message) throws IOException
     {
         fClientConnection.fCommunicationHandler.sendMessage(message);
-    }
-
-    void handleResponse() throws IOException
-    {
-        Message response = fClientConnection.fCommunicationHandler.receiveMessage();
-
-        if (response != null && response.dType == Message.Type.INFO) {
-            System.out.println(response.toString());
-        }
     }
 
     void receiveFile(String filePath) throws IOException
