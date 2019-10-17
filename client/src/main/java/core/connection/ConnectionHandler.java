@@ -1,6 +1,5 @@
 package core.connection;
 
-
 import communication.Message;
 
 import java.io.*;
@@ -19,7 +18,6 @@ public class ConnectionHandler {
         }
 
         return ConnectionHandler.sInstance;
-
     }
 
     void connectToServer(ServerInformation serverInfo) throws IOException
@@ -28,6 +26,7 @@ public class ConnectionHandler {
         if (fSocket != null && fSocket.isConnected()) {
             closeConnection();
         }
+
         fSocket = new Socket(fServerInfo.fIPAdress, fServerInfo.fPort);
     }
 
@@ -43,24 +42,19 @@ public class ConnectionHandler {
         try {
             outStream = new ObjectOutputStream(fSocket.getOutputStream());
             outStream.writeObject(message);
-        } catch (IOException e) {
-            System.out.println("Erreur lors de l'envoi d'une message au serveur! Erreur complète:");
-            System.out.println(e.toString());
         } finally {
             if (outStream != null) outStream.flush();
         }
     }
 
-    public Message waitForMessage() throws IOException
+    public Message waitForMessage() throws Exception
     {
-        ObjectInputStream inStream = null;
+        ObjectInputStream inStream;
         try {
             inStream = new ObjectInputStream(fSocket.getInputStream());
             return (Message) inStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erreur lors de la réception d'une réponse du serveur! Erreur complète:");
-            System.out.println(e.toString());
-            return null;
+        } catch (ClassNotFoundException e) {
+            throw new ClassNotFoundException("Mauvais type reçu du serveur!", e);
         }
     }
 
@@ -82,9 +76,8 @@ public class ConnectionHandler {
             while ((count = inStream.read(buffer)) > 0) {
                 outStream.write(buffer, 0, count);
             }
-        } catch (IOException e) {
-            System.out.println("Erreur lors de l'envoi du fichier! Erreur complète:");
-            System.out.println(e.toString());
+        } catch (FileNotFoundException e) {
+            throw new IOException("Le fichier n'existe pas dans votre répertoire local.", e);
         } finally {
             if (outStream != null) outStream.flush();
             if (inStream != null) inStream.close();
@@ -101,7 +94,7 @@ public class ConnectionHandler {
 
             File f = new File(filePath);
             if (f.exists()) {
-                throw new FileAlreadyExistsException(filePath + " already exists!");
+                throw new FileAlreadyExistsException(filePath + " existe déjà!");
             }
 
             outStream = new FileOutputStream(filePath);
@@ -110,15 +103,8 @@ public class ConnectionHandler {
             long fileLength = inStream.readLong();
 
             for(int i = 0; i < fileLength; ++i) outStream.write(inStream.read());
-
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la réception du fichier! Erreur complète:");
-            System.out.println(e.toString());
         } finally {
             if (outStream != null) outStream.close();
         }
     }
-
-
-
 }
