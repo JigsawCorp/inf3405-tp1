@@ -1,17 +1,19 @@
 package core.command.handlers;
 
 import command.Command;
-import communication.Message;
-import core.connection.ConnectionHandler;
 
 import java.io.IOException;
 
 public class CD extends CommandHandler {
 
+    public CD(Command command) {
+        super(command);
+    }
+
     @Override
-    public void execute(Command command) throws IOException
+    public void execute() throws Exception
     {
-        sendCommand(command);
+        sendCommand(fCommand);
         handleResponse();
     }
 }
