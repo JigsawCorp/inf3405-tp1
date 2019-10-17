@@ -17,9 +17,12 @@ public class Download extends CommandHandler {
     @Override
     public void execute(Path currentWorkingDirectory) throws IOException
     {
+        // If user requested a file that doesn't exist
         if (!FileUtils.fileExists(fCommand.fArguments[0], fClientConnection.fCurrentWorkingDirectory)) {
             sendMessage(new Info("Le fichier n'existe pas.", Info.InfoType.RESPONSE, Info.Status.FAILURE));
-        } else {
+        }
+        // File is valid
+        else {
             sendMessage(new Info("", Info.InfoType.ACK, Info.Status.SUCCESS));
             sendFile(FileUtils.getCombinedPath(fCommand.fArguments[0], fClientConnection.fCurrentWorkingDirectory).toString());
         }
