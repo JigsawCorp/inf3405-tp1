@@ -3,6 +3,7 @@ package core.connection;
 import connection.ConnectionValidator;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 
 public class ConnectionCreator {
@@ -11,15 +12,26 @@ public class ConnectionCreator {
     {
         boolean continuePrompting = true;
 
-        while (continuePrompting) {
-            String IPAddress = promptIPAddress();
-            while (!ConnectionValidator.validateIp(IPAddress)) {
+        do {
+            String IPAddress = "";
+            int port = 0;
+            while (continuePrompting) {
                 IPAddress = promptIPAddress();
+                try {
+                    continuePrompting = !ConnectionValidator.validateIp(IPAddress);
+                } catch (InvalidParameterException e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
-            int port = promptPort();
-            while (!ConnectionValidator.validatePort(port)) {
+            continuePrompting = true;
+
+            while (continuePrompting) {
                 port = promptPort();
+                continuePrompting = !ConnectionValidator.validatePort(port);
+                if (continuePrompting) {
+                    System.out.println("Le port entré n'est pas entre 5000 et 5050!");
+                }
             }
 
             try {
@@ -27,30 +39,37 @@ public class ConnectionCreator {
                 continuePrompting = false;
             } catch (IOException e) {
                 System.out.println("Erreur lors de la connexion au serveur! Erreur complète:");
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
+                continuePrompting = true;
             }
-        }
+        } while (continuePrompting);
 
         return ConnectionHandler.getInstance();
-
     }
 
+    /**
+     * Prompts the user for the server IP
+     * @return The server IP address
+     */
     private static String promptIPAddress()
     {
-        System.out.println("Please enter the server IP address:");
+        System.out.println("Veuillez entrer l'adresse IP du serveur:");
         Scanner scanner = new Scanner(System.in);
 
         return scanner.nextLine();
-
     }
 
+    /**
+     *
+     * @return
+     */
     private static int promptPort()
     {
         int port = 0;
-        boolean continuePrompting = true;
+        boolean continuePrompting;
 
         do {
-            System.out.println("Please enter the server port:");
+            System.out.println("Veuillez entrer le port du serveur:");
             Scanner scanner = new Scanner(System.in);
 
             try {
@@ -62,6 +81,5 @@ public class ConnectionCreator {
         } while(continuePrompting);
 
         return port;
-
     }
 }
