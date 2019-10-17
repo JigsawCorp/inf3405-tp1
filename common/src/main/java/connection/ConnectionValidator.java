@@ -6,13 +6,13 @@ public class ConnectionValidator {
     private static final int maxIpByteVal = 255;
     private static final int minIpByteVal = 0;
 
-    public static boolean validateIp(String IP)
+    public static boolean validateIp(String IP) throws IllegalArgumentException
     {
         String[] ipBytes = IP.split("\\.");
 
         // Return false if less than 4 bytes
         if (ipBytes.length != 4) {
-            return false;
+            throw new IllegalArgumentException("L'adresse IP n'a pas 4 bytes!");
         }
 
         for (int i = 0; i < ipBytes.length; ++i) {
@@ -21,11 +21,11 @@ public class ConnectionValidator {
             try {
                 byteVal = Integer.parseInt(ipBytes[i]);
             } catch (NumberFormatException e) {
-                return false;
+                throw new IllegalArgumentException("L'adresse IP contient des caractères non-numérique!");
             }
 
             if (byteVal < minIpByteVal || byteVal > maxIpByteVal) {
-                return false;
+                throw new IllegalArgumentException("L'adresse IP contient des bytes de longueur invalide!");
             }
         }
 
