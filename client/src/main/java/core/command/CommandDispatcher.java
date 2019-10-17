@@ -16,38 +16,14 @@ public class CommandDispatcher {
             return;
         }
 
-        CommandHandler commandToExecute = null;
-
-        switch (command.fCommandName) {
-            case CD:
-                commandToExecute = new CD();
-                break;
-            case LS:
-                commandToExecute = new LS();
-                break;
-            case MKDIR:
-                commandToExecute = new MKDIR();
-                break;
-            case UPLOAD:
-                commandToExecute = new Upload();
-                break;
-            case DOWNLOAD:
-                commandToExecute = new Download();
-                break;
-            case EXIT:
-                commandToExecute = new Exit();
-                break;
-            default:
-                commandToExecute = null;
-                break;
-        }
+        CommandHandler commandToExecute = CommandHandler.instantiate(command);
 
         if (commandToExecute != null) {
             try {
-                commandToExecute.execute(command);
+                commandToExecute.execute();
             } catch (Exception e) {
                 System.out.println("Erreur lors de l'exécution de la commande. Erreur complète:");
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
             }
         }
 
