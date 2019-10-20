@@ -20,7 +20,7 @@ public class Download extends CommandHandler {
             Info message = (Info) waitForMessage();
             if (message.fInfoType == Info.InfoType.ACK && message.fStatus == Info.Status.SUCCESS) {
                 downloadFile(fCommand.fArguments[0]);
-                System.out.println("Le fichier" + fCommand.fArguments[0] + " a bien été téléchargé.");
+                System.out.println("Le fichier " + fCommand.fArguments[0] + " a bien été téléchargé.");
             }
             // If the download didn't work, print the server error
             else {
