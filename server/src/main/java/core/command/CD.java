@@ -27,7 +27,16 @@ public class CD extends CommandHandler {
         else {
             Path path = FileUtils.getCombinedPath(fCommand.fArguments[0], currentWorkingDirectory);
             fClientConnection.fCurrentWorkingDirectory = path;
-            sendMessage(new Info("Vous êtes dans le dossier " + path.getFileName(), Info.InfoType.RESPONSE, Info.Status.SUCCESS));
+
+            String currentFolder;
+
+            if (path.getFileName() == null) {
+                currentFolder = path.toString();
+            } else {
+                currentFolder = path.getFileName().toString();
+            }
+
+            sendMessage(new Info("Vous êtes dans le dossier " + currentFolder, Info.InfoType.RESPONSE, Info.Status.SUCCESS));
         }
     }
 
