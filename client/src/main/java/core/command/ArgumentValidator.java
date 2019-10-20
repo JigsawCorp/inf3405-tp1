@@ -26,7 +26,11 @@ public class ArgumentValidator {
     }
 
     private static boolean validateCD(String[] arguments) throws IOException {
-        if (arguments.length > 0) {
+        if (arguments.length < 1) {
+            throw new IOException("Pas assez d'arguments pour CD!");
+        }
+
+        if (arguments.length > 1) {
             throw new IOException("Trop d'arguments pour CD!");
         }
 
