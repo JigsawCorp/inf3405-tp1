@@ -35,7 +35,7 @@ public class CommandDispatcher {
         try {
             commandName = Command.CommandName.valueOf(splitCommand[0].toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new Exception("Erreur lors de l'interprétation de la commande! " + splitCommand[0] + " n'est pas une commande recconnue.");
+            throw new Exception("Erreur lors de l'interprétation de la commande! " + splitCommand[0] + " n'est pas une commande reconnue.");
         }
 
         return new Command(commandName, parseArguments(splitCommand));
