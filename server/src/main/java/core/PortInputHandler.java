@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class PortInputHandler {
     public static int promptPort()
     {
-        System.out.println("Please enter the listening port (between 5000 and 5050)");
+        System.out.println("Veuillez entrer le port d'écoute du serveur (entre 5000 et 5050):");
         do {
             try {
                 Scanner scanner = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class PortInputHandler {
                     return port;
             } catch (NumberFormatException ignored) {}
 
-            System.out.println("Invalid entry. Please try again:");
+            System.out.println("Entrée invalide. Veuillez réessayer:");
         } while (true);
     }
 }
