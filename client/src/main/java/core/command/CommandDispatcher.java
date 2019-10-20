@@ -12,7 +12,7 @@ public class CommandDispatcher {
         try {
             command = parseCommand(rawCommand);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -38,16 +38,13 @@ public class CommandDispatcher {
             throw new Exception("Erreur lors de l'interprétation de la commande! " + splitCommand[0] + " n'est pas une commande reconnue.");
         }
 
-        return new Command(commandName, parseArguments(splitCommand));
+        String[] arguments = Arrays.copyOfRange(splitCommand, 1, splitCommand.length);
 
-    }
-
-    private static String[] parseArguments(String[] command) {
-        if (command.length < 2) {
-            return new String[]{};
+        if (ArgumentValidator.validateArguments(commandName, arguments)) {
+            return new Command(commandName, arguments);
         }
 
-        return Arrays.copyOfRange(command, 1, command.length);
-
+        return null;
     }
+
 }
