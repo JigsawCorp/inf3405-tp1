@@ -1,12 +1,22 @@
 package core.connection;
 
+/**
+ * Holds connection information for the server.
+ */
 public class ServerInformation {
-    public String fIPAdress;
+    // IP Address of server.
+    public String fIPAddress;
+    // Port of server.
     public int fPort;
 
+    /**
+     * Constructor.
+     * @param IPAddress IP address of the server.
+     * @param port Port of the server.
+     */
     public ServerInformation(String IPAddress, int port)
     {
-        fIPAdress = IPAddress;
+        fIPAddress = IPAddress;
         fPort = port;
     }
 }

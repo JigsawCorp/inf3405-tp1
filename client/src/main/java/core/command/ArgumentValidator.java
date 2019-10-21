@@ -4,9 +4,20 @@ import command.Command;
 
 import java.io.IOException;
 
+/**
+ * Validates arguments for a command.
+ */
 public class ArgumentValidator {
+    /**
+     * Validate arguments for a given command.
+     * @param commandName The name of the command.
+     * @param arguments The arguments to validate for the command.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
     public static boolean validateArguments(Command.CommandName commandName, String[] arguments) throws IOException
     {
+        // Select which command to validate.
         switch (commandName) {
             case CD:
                 return validateCD(arguments);
@@ -25,7 +36,14 @@ public class ArgumentValidator {
         }
     }
 
-    private static boolean validateCD(String[] arguments) throws IOException {
+    /**
+     * Validates arguments for the cd command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateCD(String[] arguments) throws IOException
+    {
         if (arguments.length < 1) {
             throw new IOException("Pas assez d'arguments pour CD!");
         }
@@ -37,7 +55,14 @@ public class ArgumentValidator {
         return true;
     }
 
-    private static boolean validateLS(String[] arguments) throws IOException {
+    /**
+     * Validates arguments for the ls command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateLS(String[] arguments) throws IOException
+    {
         if (arguments.length > 0) {
             throw new IOException("Trop d'arguments pour LS!");
         }
@@ -45,7 +70,14 @@ public class ArgumentValidator {
         return true;
     }
 
-    private static boolean validateMKDIR(String[] arguments) throws IOException {
+    /**
+     * Validates arguments for the mkdir command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateMKDIR(String[] arguments) throws IOException
+    {
         if (arguments.length < 1) {
             throw new IOException("Pas assez d'arguments pour MKDIR!");
         }
@@ -57,7 +89,14 @@ public class ArgumentValidator {
         return true;
     }
 
-    private static boolean validateUPLOAD(String[] arguments) throws IOException {
+    /**
+     * Validates arguments for the upload command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateUPLOAD(String[] arguments) throws IOException
+    {
         if (arguments.length < 1) {
             throw new IOException("Pas assez d'arguments pour UPLOAD!");
         }
@@ -68,7 +107,15 @@ public class ArgumentValidator {
 
         return true;
     }
-    private static boolean validateDOWNLOAD(String[] arguments) throws IOException {
+
+    /**
+     * Validates arguments for the download command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateDOWNLOAD(String[] arguments) throws IOException
+    {
         if (arguments.length < 1) {
             throw new IOException("Pas assez d'arguments pour DOWNLOAD!");
         }
@@ -80,7 +127,14 @@ public class ArgumentValidator {
         return true;
     }
 
-    private static boolean validateEXIT(String[] arguments) throws IOException {
+    /**
+     * Validates arguments for the exit command.
+     * @param arguments The arguments to validate.
+     * @return True if the arguments are valid.
+     * @throws IOException If the arguments are invalid.
+     */
+    private static boolean validateEXIT(String[] arguments) throws IOException
+    {
         if (arguments.length > 0) {
             throw new IOException("Trop d'arguments pour EXIT!");
         }

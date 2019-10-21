@@ -6,7 +6,15 @@ import core.connection.ConnectionHandler;
 
 import java.io.IOException;
 
+/**
+ * Entry-point class for the client application
+ */
 public class Client {
+    /**
+     * Starts the client application
+     * @param args
+     * @throws IOException If closing the connection doesn't work
+     */
     public static void main(String[] args) throws IOException
     {
         // Connect to server

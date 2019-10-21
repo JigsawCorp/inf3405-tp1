@@ -3,14 +3,23 @@ package core.command.handlers;
 import command.Command;
 import communication.Info;
 
-import java.io.IOException;
-
+/**
+ * CommandHandler for the upload command.
+ */
 public class Upload extends CommandHandler {
 
+    /**
+     * Constructor.
+     * @param command The command to execute.
+     */
     public Upload(Command command) {
         super(command);
     }
 
+    /**
+     * Execute the command.
+     * @throws Exception If executing the command fails.
+     */
     @Override
     public void execute() throws Exception
     {
