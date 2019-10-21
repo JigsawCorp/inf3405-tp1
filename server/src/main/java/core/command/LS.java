@@ -3,19 +3,30 @@ package core.command;
 import command.Command;
 import communication.Info;
 import core.ClientConnection;
-import core.CommunicationHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+/**
+ * CommandHandler for the ls command.
+ */
 public class LS extends CommandHandler {
 
+    /**
+     * Constructor.
+     * @param command The command to execute.
+     * @param clientConnection The client connection.
+     */
     public LS(Command command, ClientConnection clientConnection) {
         super(command, clientConnection);
     }
 
+    /**
+     * Execute the command.
+     * @param currentWorkingDirectory The CWD to execute the command in.
+     * @throws IOException If executing the command fails.
+     */
     @Override
     public void execute(Path currentWorkingDirectory) throws IOException
     {

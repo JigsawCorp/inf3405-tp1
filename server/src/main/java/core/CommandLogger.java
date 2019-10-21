@@ -6,7 +6,16 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Logs client messages to the console.
+ */
 public class CommandLogger {
+
+    /**
+     * Logs a given command from a client socket to the console.
+     * @param command The command to log.
+     * @param clientSocket The client who sent the message.
+     */
     public static void logCommand(Command command, Socket clientSocket)
     {
         String log = "";
@@ -20,6 +29,10 @@ public class CommandLogger {
         System.out.println(log);
     }
 
+    /**
+     * Format the current date.
+     * @return The formatted date.
+     */
     private static String formatDate()
     {
         String formattedDate = "";
@@ -30,6 +43,4 @@ public class CommandLogger {
 
         return formattedDate;
     }
-
-
 }

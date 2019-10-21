@@ -8,12 +8,25 @@ import utils.FileUtils;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * CommandHandler for the download command.
+ */
 public class Download extends CommandHandler {
 
+    /**
+     * Constructor.
+     * @param command The command to execute.
+     * @param clientConnection The client connection.
+     */
     public Download(Command command, ClientConnection clientConnection) {
         super(command, clientConnection);
     }
 
+    /**
+     * Execute the command.
+     * @param currentWorkingDirectory The CWD to execute the command in.
+     * @throws IOException If executing the command fails.
+     */
     @Override
     public void execute(Path currentWorkingDirectory) throws IOException
     {
